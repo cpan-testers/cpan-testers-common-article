@@ -1,0 +1,8 @@
+Revision history for Perl module CPAN::Testers::Common::Article
+===============================================================
+
+0.36    12/02/2009
+        - initial independent release.
+	- abstracted from CPAN-Testers-Data-Generator, as used by more than
+	  that distribution, and sits more appropriately on its own. Hence why
+	  the version number starts where it does :)

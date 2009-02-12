@@ -1,0 +1,16 @@
+CHANGES
+MANIFEST			This list of files
+Makefile.PL
+META.yml
+README
+lib/CPAN/Testers/Common/Article.pm
+t/01base.t
+t/10functions.t
+t/11article.t
+t/90podtest.t
+t/91podcover.t
+t/94metatest.t
+t/nntp/126015.txt
+t/nntp/125106.txt
+t/nntp/1804993.txt
+t/nntp/1805500.txt
