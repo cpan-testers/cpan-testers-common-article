@@ -1,7 +1,7 @@
 Revision history for Perl module CPAN::Testers::Common::Article
 ===============================================================
 
-0.37    current
+0.37    12/08/2009
 	- added more regexes to try and extract Perl version.
 
 0.36    12/02/2009
