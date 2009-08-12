@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = '0.36';
+$VERSION = '0.37';
 
 #----------------------------------------------------------------------------
 # Library Modules
@@ -25,6 +25,19 @@ my %month = (
 	Jul => 7, Aug => 8, Sep => 9, Oct => 10, Nov => 11, Dec => 12,
 );
 
+my @perl_extractions = (
+    # Summary of my perl5 (revision 5.0 version 6 subversion 1) configuration:
+    # Summary of my perl5 (revision 5 version 10 subversion 0) configuration:
+    qr/Summary of my (?:perl(?:\d+)?)? \((?:revision )?(\d+(?:\.\d+)?) (?:version|patchlevel) (\d+) subversion\s+(\d+) ?(.*?)\) configuration/,
+
+    # the following is experimental and may provide incorrect data
+    qr!/(?:(?:site_perl|perl|perl5|\.?cpanplus)/|perl-)(5)\.?([6-9]|1[0-2])\.?(\d+)/!,
+
+    # this dissects the report introduction and is used in the event that
+    # the report gets truncated and noe perl -V information is available.
+    qr/on Perl (\d+)\.(\d+)(?:\.(\d+))?/,
+);
+
 my %regexes = (
     # with time
     1 => { re => qr/(?:\w+,)?\s+(\d+)\s+(\w+)\s+(\d+)\s+(\d+):(\d+)/,   f => [qw(day month year hour min)] },     # Wed, 13 September 2004 06:29
@@ -40,11 +53,15 @@ my %regexes = (
 my $OSNAMES = qr/(cygwin|freebsd|netbsd|openbsd|darwin|linux|cygwin|darwin|MSWin32|dragonfly|solaris|MacOS|irix|mirbsd|gnu|bsdos|aix|sco|os2)/i;
 my %OSNAMES = (
     'MacPPC'    => 'macos',
+
     'osf'       => 'dec_osf',
     'pa-risc'   => 'hpux',
     's390'      => 'os390',
     'VMS_'      => 'vms',
     'ARCHREV_0' => 'hpux',
+    'linuxThis' => 'linux',
+    'linThis'   => 'linux',
+    'lThis'     => 'linux',
 );
 
 #----------------------------------------------------------------------------
@@ -253,36 +270,25 @@ sub _extract_date {
 
 sub _extract_perl_version {
     my ($self, $body) = @_;
+    my ($rev, $ver, $sub, $extra);
 
-    # Summary of my perl5 (revision 5.0 version 6 subversion 1) configuration:
-    # Summary of my perl5 (revision 5 version 10 subversion 0) configuration:
-    my ($rev, $ver, $sub, $extra) =
-        $$body =~ /Summary of my (?:perl(?:\d+)?)? \((?:revision )?(\d+(?:\.\d+)?) (?:version|patchlevel) (\d+) subversion\s+(\d+) ?(.*?)\) configuration/si;
-
-    if(defined $rev) {
-        my $perl = $rev + ($ver / 1000) + ($sub / 1000000);
-        $rev = int($perl);
-        $ver = int(($perl*1000)%1000);
-        $sub = int(($perl*1000000)%1000);
-
-        my $version = sprintf "%d.%d.%d", $rev, $ver, $sub;
-        $version .= " $extra" if $extra;
-        return $version;
-    #   return sprintf "%0.6f", $perl;	# an alternate format
+    for my $regex (@perl_extractions) {
+        ($rev, $ver, $sub, $extra) = $$body =~ /$regex/si;
+        last    if(defined $rev);
     }
 
-    # the following is experimental and may provide incorrect data
+    return 0    unless(defined $rev);
 
-    ($rev, $ver, $sub) =
-        $$body =~ m!/(?:(?:site_perl|perl|perl5|\.?cpanplus)/|perl-)(5)\.?([6-9]|1[0-2])\.?(\d+)/!;
-    if(defined $rev) {
-        my $version = sprintf "%d.%d.%d", $rev, $ver, $sub;
-        return $version;
-    }
+    $ver ||= 0;
+    $sub ||= 0;
+    my $perl = $rev + ($ver / 1000) + ($sub / 1000000);
+    $rev = int($perl);
+    $ver = int(($perl*1000)%1000);
+    $sub = int(($perl*1000000)%1000);
 
-
-#    warn "Cannot parse perl version for article:\n$body";
-    return 0;
+    my $version = sprintf "%d.%d.%d", $rev, $ver, $sub;
+    $version .= " $extra" if $extra;
+    return $version;
 }
 
 1;

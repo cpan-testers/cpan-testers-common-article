@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 use strict;
-use Test::More tests => 17;
+use Test::More tests => 19;
 use CPAN::Testers::Common::Article;
 use IO::File;
 
@@ -21,6 +21,14 @@ my @perls = (
     text => 'Summary of my perl5 (revision 5.0 version 8 subversion 1 RC3) configuration',
     perl => '5.8.1 RC3',
   },
+  {
+    text => 'Summary of my perl5 (revision 5 patchlevel 6 subversion 1) configuration',
+    perl => '5.6.1',
+  },
+  {
+    text => 'on Perl 5.8.8, created by CPAN-Reporter',
+    perl => '5.8.8',
+  },
 #  {
 #    text => '',
 #    perl => '',
@@ -36,7 +44,7 @@ for(@perls) {
   my $perl = $_->{perl};
 
   my $version = $ctca->_extract_perl_version(\$text);
-  is($version, $perl);
+  is($version, $perl,".. matches perl $perl");
 }
 
 my @testdates = (
