@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 use strict;
-use Test::More tests => 19;
+use Test::More tests => 20;
 use CPAN::Testers::Common::Article;
 use IO::File;
 
@@ -27,6 +27,10 @@ my @perls = (
   },
   {
     text => 'on Perl 5.8.8, created by CPAN-Reporter',
+    perl => '5.8.8',
+  },
+  {
+    text => 'on perl 5.8.8, created by CPAN-Reporter',
     perl => '5.8.8',
   },
 #  {

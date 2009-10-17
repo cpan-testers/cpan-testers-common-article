@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = '0.37';
+$VERSION = '0.38';
 
 #----------------------------------------------------------------------------
 # Library Modules
@@ -34,8 +34,8 @@ my @perl_extractions = (
     qr!/(?:(?:site_perl|perl|perl5|\.?cpanplus)/|perl-)(5)\.?([6-9]|1[0-2])\.?(\d+)/!,
 
     # this dissects the report introduction and is used in the event that
-    # the report gets truncated and noe perl -V information is available.
-    qr/on Perl (\d+)\.(\d+)(?:\.(\d+))?/,
+    # the report gets truncated and no perl -V information is available.
+    qr/on Perl (\d+)\.(\d+)(?:\.(\d+))?/i,
 );
 
 my %regexes = (
@@ -50,10 +50,9 @@ my %regexes = (
     6 => { re => qr/(\w+)?\s+(\d+),?\s+(\d+)/,          f => [qw(month day year)] },  # September 22, 1999 06:29
 );
 
-my $OSNAMES = qr/(cygwin|freebsd|netbsd|openbsd|darwin|linux|cygwin|darwin|MSWin32|dragonfly|solaris|MacOS|irix|mirbsd|gnu|bsdos|aix|sco|os2)/i;
+my $OSNAMES = qr/(cygwin|freebsd|netbsd|openbsd|darwin|linux|cygwin|darwin|MSWin32|dragonfly|solaris|MacOS|irix|mirbsd|gnu|bsdos|aix|sco|os2|haiku)/i;
 my %OSNAMES = (
     'MacPPC'    => 'macos',
-
     'osf'       => 'dec_osf',
     'pa-risc'   => 'hpux',
     's390'      => 'os390',
@@ -61,7 +60,9 @@ my %OSNAMES = (
     'ARCHREV_0' => 'hpux',
     'linuxThis' => 'linux',
     'linThis'   => 'linux',
+    'linuThis'  => 'linux',
     'lThis'     => 'linux',
+    'openThis'  => 'openbsd',
 );
 
 #----------------------------------------------------------------------------
@@ -264,9 +265,10 @@ sub _extract_date {
     return($short,$long,$epoch);
 }
 
-# there are a few old test reports that omitted the perl version number.
-# In these instances 0 is assumed. These reports are now so old, that
-# worrying about them is not worth the effort.
+# there are a number of test reports that either omitted the perl version 
+# completely, or have had it truncated by the NNTP mail server. In more recent
+# reports the perl version number is also listed towards the beginning of the
+# report. The cocde below now attempts to find something in all known places.
 
 sub _extract_perl_version {
     my ($self, $body) = @_;

@@ -1,6 +1,10 @@
 Revision history for Perl module CPAN::Testers::Common::Article
 ===============================================================
 
+0.38    17/10/2009
+	- added even more regexes to try and extract Perl version.
+	- more pattern matches for osname
+
 0.37    12/08/2009
 	- added more regexes to try and extract Perl version.
 
