@@ -1,6 +1,9 @@
 Revision history for Perl module CPAN::Testers::Common::Article
 ===============================================================
 
+0.39    02/11/2009
+	- POD update, missing accessors.
+
 0.38    17/10/2009
 	- added even more regexes to try and extract Perl version.
 	- more pattern matches for osname

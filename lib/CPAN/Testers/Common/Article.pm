@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = '0.38';
+$VERSION = '0.39';
 
 #----------------------------------------------------------------------------
 # Library Modules
@@ -355,6 +355,10 @@ article has been parsed as a report or upload announcement.
 
 'YYYYMMDDhhmm' representation of the date article was posted.
 
+=item * epoch
+
+Number of seconds since the epoch of when article was posted
+
 =item * status
 
 For reports this will be the grade, for uploads this will be 'CPAN'.
@@ -391,6 +395,14 @@ osvers, but they are not always the same.
 =item * subject
 
 Subject line of the original post.
+
+=item * author
+
+Author of uploaded distribution (Upload article only).
+
+=item * filename
+
+File name of uploaded distribution (Upload article only).
 
 =back
 
