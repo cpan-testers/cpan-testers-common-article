@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = '0.39';
+$VERSION = '0.40';
 
 #----------------------------------------------------------------------------
 # Library Modules
@@ -68,19 +68,29 @@ my %OSNAMES = (
 #----------------------------------------------------------------------------
 # The Public API
 
-__PACKAGE__->mk_accessors(qw(
-                    postdate date epoch status from distribution version
-                    perl osname osvers archname subject author filename));
+__PACKAGE__->mk_accessors(
+    qw(
+        raw cooked header body
+        postdate date epoch status from distribution version
+        perl osname osvers archname subject author filename
+    )
+);
 
 sub new {
     my($class, $article) = @_;
     my $self = {};
     bless $self, $class;
 
+    $self->raw($article);
     $article = decode_qp($article)	if($article =~ /=3D/);
+    $self->cooked($article);
 
     my $mail = Email::Simple->new($article);
     return unless $mail;
+
+    $self->header($mail->header_obj());
+    $self->body($mail->body());
+
     return if $mail->header("In-Reply-To");
 
     my $from    = $mail->header("From");

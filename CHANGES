@@ -1,6 +1,9 @@
 Revision history for Perl module CPAN::Testers::Common::Article
 ===============================================================
 
+0.40    03/01/2010
+	- added raw, cooked, header and body methods.
+
 0.39    02/11/2009
 	- POD update, missing accessors.
 
