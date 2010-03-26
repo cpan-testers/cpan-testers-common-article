@@ -1,6 +1,10 @@
 Revision history for Perl module CPAN::Testers::Common::Article
 ===============================================================
 
+0.41    26/03/2010
+	- added support for 'X-Test-Reporter-Perl' header to indicate a
+	  release candidate (RC) version of perl.
+
 0.40    03/01/2010
 	- added raw, cooked, header and body methods.
 

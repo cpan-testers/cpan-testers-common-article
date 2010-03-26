@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = '0.40';
+$VERSION = '0.41';
 
 #----------------------------------------------------------------------------
 # Library Modules
@@ -160,11 +160,11 @@ sub parse_report {
     return 0 unless defined $version;
 
     my $encoding = $mail->header('Content-Transfer-Encoding');
-
+    my $head = $mail->header("X-Test-Reporter-Perl");
     my $body = $mail->body;
     $body = decode_base64($body)  if($encoding && $encoding eq 'base64');
 
-    my $perl = $self->_extract_perl_version(\$body);
+    my $perl = $self->_extract_perl_version(\$body,$head);
 
     my ($osname)   = $body =~ /(?:Summary of my perl5|Platform:).*?osname=([^\s\n,<\']+)/s;
     my ($osvers)   = $body =~ /(?:Summary of my perl5|Platform:).*?osvers=([^\s\n,<\']+)/s;
@@ -281,7 +281,7 @@ sub _extract_date {
 # report. The cocde below now attempts to find something in all known places.
 
 sub _extract_perl_version {
-    my ($self, $body) = @_;
+    my ($self, $body, $head) = @_;
     my ($rev, $ver, $sub, $extra);
 
     for my $regex (@perl_extractions) {
@@ -297,6 +297,12 @@ sub _extract_perl_version {
     $rev = int($perl);
     $ver = int(($perl*1000)%1000);
     $sub = int(($perl*1000000)%1000);
+
+    # check for a release candidate (classed as a patch)
+    if($head && $head =~ /v5\.\d+\.\d+ (RC\d+)/) {
+        $extra .= ' '   if($extra);
+        $extra .= "$1 patched";
+    }
 
     my $version = sprintf "%d.%d.%d", $rev, $ver, $sub;
     $version .= " $extra" if $extra;
