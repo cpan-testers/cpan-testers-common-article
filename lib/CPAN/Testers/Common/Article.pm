@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = '0.41';
+$VERSION = '0.42';
 
 #----------------------------------------------------------------------------
 # Library Modules
@@ -301,7 +301,7 @@ sub _extract_perl_version {
     # check for a release candidate (classed as a patch)
     if($head && $head =~ /v5\.\d+\.\d+ (RC\d+)/) {
         $extra .= ' '   if($extra);
-        $extra .= "$1 patched";
+        $extra .= "$1";
     }
 
     my $version = sprintf "%d.%d.%d", $rev, $ver, $sub;

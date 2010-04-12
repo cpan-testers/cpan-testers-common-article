@@ -36,7 +36,7 @@ my @perls = (
   {
     head => 'v5.12.0 RC1',
     text => 'Summary of my perl5 (revision 5.0 version 12 subversion 0) configuration',
-    perl => '5.12.0 RC1 patched',
+    perl => '5.12.0 RC1',
   },
 #  {
 #    text => '',

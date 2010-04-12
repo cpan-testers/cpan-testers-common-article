@@ -1,6 +1,10 @@
 Revision history for Perl module CPAN::Testers::Common::Article
 ===============================================================
 
+0.42    12/04/2010
+	- RC in perl version now classed as patch in rest of eco-system, thus
+	  no need to add 'patched' text.
+
 0.41    26/03/2010
 	- added support for 'X-Test-Reporter-Perl' header to indicate a
 	  release candidate (RC) version of perl.
