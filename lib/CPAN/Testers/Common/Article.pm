@@ -50,7 +50,7 @@ my %regexes = (
     6 => { re => qr/(\w+)?\s+(\d+),?\s+(\d+)/,          f => [qw(month day year)] },  # September 22, 1999 06:29
 );
 
-my $OSNAMES = qr/(cygwin|freebsd|netbsd|openbsd|darwin|linux|cygwin|darwin|MSWin32|dragonfly|solaris|MacOS|irix|mirbsd|gnu|bsdos|aix|sco|os2|haiku)/i;
+my $OSNAMES = qr/(cygwin|freebsd|netbsd|openbsd|darwin|linux|cygwin|darwin|MSWin32|dragonfly|solaris|MacOS|irix|mirbsd|gnu|bsdos|aix|sco|os2|haiku|beos|midnight)/i;
 my %OSNAMES = (
     'MacPPC'    => 'macos',
     'osf'       => 'dec_osf',
