@@ -446,8 +446,9 @@ F<http://wiki.cpantesters.org/>
 =head1 AUTHOR
 
   Original author:    Leon Brocard <acme@astray.com>   (C) 2002-2008
-  Current maintainer: Barbie       <barbie@cpan.org>   (C) 2008-2009
+  Current maintainer: Barbie       <barbie@cpan.org>   (C) 2008-2012
 
 =head1 LICENSE
 
-This code is distributed under the same license as Perl.
+  This module is free software; you can redistribute it and/or
+  modify it under the Artistic Licence v2.

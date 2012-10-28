@@ -6,7 +6,7 @@ author:
   - Barbie <barbie@cpan.org>
   - Leon Brocard <leon@astray.com>
 
-license:                  perl
+license:                  artistic_2
 distribution_type:        module
 installdirs:              site
 
@@ -18,11 +18,9 @@ requires:
   MIME::QuotedPrint:                0
   Time::Local:                      0
 recommends:
-  IO::File:                         0
-  Test::More:                       0.70
+  Test::CPAN::Meta:                 0.12
   Test::Pod:                        1.00
   Test::Pod::Coverage:              0.08
-  Test::CPAN::Meta:                 0.12
 build_requires:
   IO::File:                         0
   Test::More:                       0.01
