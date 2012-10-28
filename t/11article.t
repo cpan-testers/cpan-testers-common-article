@@ -113,8 +113,6 @@ like($a->cooked,qr/AUTOMATED_TESTING\s+=\s+1/,'.. quoted printable in cooked sta
 like($a->body,qr/AUTOMATED_TESTING\s+=\s+1/);
 
 
-
-
 sub readfile {
     my $file = shift;
     my $text;

@@ -3,8 +3,11 @@ Revision history for Perl module CPAN::Testers::Common::Article
 
         - spelling fixes. (thanks to Florian Schlichting & Gregor Herrmann).
         - change file dates changed to meet W3CDTF standards.
-        - CHANGES to Changes
+        - CHANGES to Changes.
         - Artistic License v2 now sole license.
+        - added minimum perl version (5.006).
+        - reworked Makefile.PL for clarity.
+        - Added META.json & test script.
 
 0.42    2010-04-12
         - RC in perl version now classed as patch in rest of eco-system, thus

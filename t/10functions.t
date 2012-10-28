@@ -1,5 +1,6 @@
 #!/usr/bin/perl -w
 use strict;
+
 use Test::More tests => 21;
 use CPAN::Testers::Common::Article;
 use IO::File;

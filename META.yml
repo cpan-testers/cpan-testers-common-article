@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                     CPAN-Testers-Common-Article
-version:                  0.42
+version:                  0.43
 abstract:                 Parse a CPAN Testers NNTP article
 author:
   - Barbie <barbie@cpan.org>
@@ -11,24 +11,26 @@ distribution_type:        module
 installdirs:              site
 
 requires:
-  Class::Accessor::Fast:            0
-  CPAN::DistnameInfo:               0
-  Email::Simple:                    0
-  MIME::Base64:                     0
-  MIME::QuotedPrint:                0
-  Time::Local:                      0
+  perl:                   5.006
+  Class::Accessor::Fast:  0
+  CPAN::DistnameInfo:     0
+  Email::Simple:          0
+  MIME::Base64:           0
+  MIME::QuotedPrint:      0
+  Time::Local:            0
 recommends:
-  Test::CPAN::Meta:                 0.12
-  Test::Pod:                        1.00
-  Test::Pod::Coverage:              0.08
+  Test::CPAN::Meta:       0
+  Test::CPAN::Meta::JSON: 0
+  Test::Pod:              1.00
+  Test::Pod::Coverage:    0.08
 build_requires:
-  IO::File:                         0
-  Test::More:                       0.01
+  IO::File:               0
+  Test::More:             0.70
 
 provides:
   CPAN::Testers::Common::Article:
     file:     lib/CPAN/Testers/Common/Article.pm
-    version:  0.42
+    version:  0.43
 
 no_index:
   directory:

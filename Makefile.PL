@@ -1,8 +1,20 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use 5.006;
+
 use ExtUtils::MakeMaker;
+
 WriteMakefile(
-    'NAME'          => 'CPAN::Testers::Common::Article',
-    'VERSION_FROM'  => 'lib/CPAN/Testers/Common/Article.pm',
-    'PREREQ_PM'     => {
+    AUTHOR              => 'Barbie <barbie@cpan.org>',
+    NAME                => 'CPAN::Testers::Common::Article',
+    VERSION_FROM        => 'lib/CPAN/Testers/Common/Article.pm',
+    ABSTRACT            => 'Parse a CPAN Testers NNTP article',
+    NO_META             => 1,
+    PREREQ_PM           => {
+
+        # runtime prereqs
         'Class::Accessor::Fast' => 0,
         'CPAN::DistnameInfo'    => 0,
         'Email::Simple'         => 0,
@@ -10,13 +22,9 @@ WriteMakefile(
         'MIME::QuotedPrint'     => 0,
         'Time::Local'           => 0,
 
-        'IO::File'              => 0,       # only for testing
-        'Test::More'            => 0,       # only for testing
-    },
+        # build/test prereqs
+        'IO::File'              => '0',
+        'Test::More'            => '0.70',
 
-    NO_META         => 1,
-
-    ($] >= 5.005 ?    ## Add these new keywords supported since 5.005
-      (ABSTRACT	=> 'Parse a CPAN Testers NNTP article',
-       AUTHOR	=> 'Barbie <barbie@cpan.org>') : ()),
+    }
 );
