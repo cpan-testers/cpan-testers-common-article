@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 use strict;
 
-use Test::More tests => 21;
+use Test::More tests => 27;
 use CPAN::Testers::Common::Article;
 use IO::File;
 
@@ -31,6 +31,10 @@ my @perls = (
     perl => '5.8.8',
   },
   {
+    text => '/site_perl/5.8.8/',
+    perl => '5.8.8',
+  },
+  {
     text => 'on perl 5.8.8, created by CPAN-Reporter',
     perl => '5.8.8',
   },
@@ -38,6 +42,28 @@ my @perls = (
     head => 'v5.12.0 RC1',
     text => 'Summary of my perl5 (revision 5.0 version 12 subversion 0) configuration',
     perl => '5.12.0 RC1',
+  },
+  {
+    head => 'v5.12.0',
+    text => 'Summary of my perl5 (revision 5.0 version 12 subversion 0) configuration',
+    perl => '5.12.0',
+  },
+
+  {
+    text => 'on perl 5, created by CPAN-Reporter',
+    perl => '0',
+  },
+  {
+    text => 'Summary of my perl5 (revision 5.0) configuration',
+    perl => '0'
+  },
+  {
+    text => 'Summary of my perl5 (revision 5.0 version 8) configuration',
+    perl => '0'
+  },
+  {
+    text => '/site_perl/5.8/',
+    perl => '0'
   },
 #  {
 #    text => '',
@@ -54,24 +80,31 @@ for(@perls) {
   my $perl = $_->{perl};
   my $head = $_->{head};
 
-  my $version = $ctca->_extract_perl_version(\$text,$head);
+  my $version = $ctca->_extract_perl_version($text,$head);
   is($version, $perl,".. matches perl $perl");
 }
 
-my @testdates = (
-    ['Wed, 13 September 2004','200409','200409130000'],
-    ['13 September 2004','200409','200409130000'],
-    ['September 22, 1999 06:29','199909','199909220629'],
+my @dates = (
+    { date => 'Wed, 13 September 2004 06:29',   result => ['200409','200409130629',1095053340] },
+    { date => '13 September 2004 06:29',        result => ['200409','200409130629',1095053340] },
+    { date => 'September 22, 1999 06:29',       result => ['199909','199909220629',937978140] },
+    { date => 'Wed, 13 September 2004',         result => ['200409','200409130000',1095030000] },
+    { date => '13 September 2004',              result => ['200409','200409130000',1095030000] },
+    { date => 'September 22, 1999',             result => ['199909','199909220000',937954800] },
+    { date => 'Sep 22, 1999',                   result => ['199909','199909220000',937954800] },
 
-    ['Wed, 13 September 1990','000000','000000000000'],
-    ['13 September 1990','000000','000000000000'],
-    ['September 22, 1990 06:29','000000','000000000000'],
+    { date => 'September 22, 1995',             result => ['000000','000000000000',0] },
+    { date => 'Month 22, 1999',                 result => ['000000','000000000000',0] },
+
+    { date => '13/09/2004',                     result => ['000000','000000000000',0] },
+    { date => '13-09-2004T06:29:00Z',           result => ['000000','000000000000',0] },
+    { date => '',                               result => ['000000','000000000000',0] },
 );
 
-for my $row (@testdates) {
-    my ($d1,$d2) = $ctca->_extract_date($row->[0]);
-    is($d1,$row->[1],".. short date parse of '$row->[0]'");
-    is($d2,$row->[2],".. long date parse of '$row->[0]'");
+for my $date (@dates) {
+    my @extract = $ctca->_extract_date($date->{date});
+    #diag("$date->{date}: " . Dumper(\@extract));
+    is_deeply(\@extract, $date->{result}, ".. test for $date->{date}");
 }
 
 sub readfile {

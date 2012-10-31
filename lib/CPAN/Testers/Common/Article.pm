@@ -47,7 +47,7 @@ my %regexes = (
     # just the date
     4 => { re => qr/(?:\w+,)?\s+(\d+)\s+(\w+)\s+(\d+)/, f => [qw(day month year)] },  # Wed, 13 September 2004
     5 => { re => qr/(\d+)\s+(\w+)\s+(\d+)/,             f => [qw(day month year)] },  # 13 September 2004
-    6 => { re => qr/(\w+)?\s+(\d+),?\s+(\d+)/,          f => [qw(month day year)] },  # September 22, 1999 06:29
+    6 => { re => qr/(\w+)?\s+(\d+),?\s+(\d+)/,          f => [qw(month day year)] },  # September 22, 1999
 );
 
 my $OSNAMES = qr/(cygwin|freebsd|netbsd|openbsd|darwin|linux|cygwin|darwin|MSWin32|dragonfly|solaris|MacOS|irix|mirbsd|gnu|bsdos|aix|sco|os2|haiku|beos|midnight)/i;
@@ -165,7 +165,7 @@ sub parse_report {
     my $body = $mail->body;
     $body = decode_base64($body)  if($encoding && $encoding eq 'base64');
 
-    my $perl = $self->_extract_perl_version(\$body,$head);
+    my $perl = $self->_extract_perl_version($body,$head);
 
     my ($osname)   = $body =~ /(?:Summary of my perl5|Platform:).*?osname=([^\s\n,<\']+)/s;
     my ($osvers)   = $body =~ /(?:Summary of my perl5|Platform:).*?osvers=([^\s\n,<\']+)/s;
@@ -256,7 +256,7 @@ sub _extract_date {
         }
     }
 
-    return('000000','000000000000',0) unless(@fields && $index);
+    return('000000','000000000000',0) unless($index);
 
     @fields{@{$regexes{$index}->{f}}} = @fields;
 
@@ -286,14 +286,15 @@ sub _extract_perl_version {
     my ($rev, $ver, $sub, $extra);
 
     for my $regex (@perl_extractions) {
-        ($rev, $ver, $sub, $extra) = $$body =~ /$regex/si;
+        ($rev, $ver, $sub, $extra) = $body =~ /$regex/si;
         last    if(defined $rev);
     }
 
     return 0    unless(defined $rev);
 
-    $ver ||= 0;
-    $sub ||= 0;
+    #$ver ||= 0;    # current patterns require ver and sub values
+    #$sub ||= 0;
+
     my $perl = $rev + ($ver / 1000) + ($sub / 1000000);
     $rev = int($perl);
     $ver = int(($perl*1000)%1000);
