@@ -1,6 +1,7 @@
 Revision history for Perl module CPAN::Testers::Common::Article
 ===============================================================
 
+0.43    current
         - spelling fixes. (thanks to Florian Schlichting & Gregor Herrmann).
         - change file dates changed to meet W3CDTF standards.
         - CHANGES to Changes.
@@ -9,6 +10,7 @@ Revision history for Perl module CPAN::Testers::Common::Article
         - reworked Makefile.PL for clarity.
         - added META.json & test script.
         - added example script.
+        - more tests & samples.
 
 0.42    2010-04-12
         - RC in perl version now classed as patch in rest of eco-system, thus

@@ -150,6 +150,7 @@ sub parse_report {
     $platform ||= "";
     $platform =~ s/[\s&,<].*//;
 
+    $distversion ||= "";
     $distversion =~ s!/$!!;
     $distversion =~ s/\.tar.*/.tar.gz/;
     $distversion .= '.tar.gz' unless $distversion =~ /\.(tar|tgz|zip)/;
