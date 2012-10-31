@@ -73,6 +73,7 @@ __PACKAGE__->mk_accessors(
         raw cooked header body
         postdate date epoch status from distribution version
         perl osname osvers archname subject author filename
+        osname_patterns osname_fixes
     )
 );
 
@@ -97,6 +98,9 @@ sub new {
     my $subject = $mail->header("Subject");
     return unless $subject;
     return if $subject =~ /::/; # it's supposed to be a distribution
+
+    $self->osname_patterns( $OSNAMES );
+    $self->osname_fixes( \%OSNAMES );
 
     $self->{mail}    = $mail;
     $self->{from}    = $from;
@@ -185,14 +189,17 @@ sub parse_report {
     }
 
     unless($osname) {
+        my $patterns = $self->osname_patterns;
+        my $fixes = $self->osname_fixes;
+
         for my $text ($platform, $archname) {
             next    unless($text);
-            if($text =~ $OSNAMES) {
+            if($text =~ $patterns) {
                 $osname = $1;
             } else {
-                for my $rx (keys %OSNAMES) {
+                for my $rx (keys %$fixes) {
                     if($text =~ /$rx/i) {
-                        $osname = $OSNAMES{$rx};
+                        $osname = $fixes->{$rx};
                         last;
                     }
                 }
@@ -421,6 +428,14 @@ Author of uploaded distribution (Upload article only).
 =item * filename
 
 File name of uploaded distribution (Upload article only).
+
+=item * osnames_patterns
+
+A regular expression of known operating system coded strings.
+
+=item * osnames_fixes
+
+A hash reference to strings that may have been mangled, and their corrections.
 
 =back
 
