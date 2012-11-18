@@ -1,6 +1,9 @@
 Revision history for Perl module CPAN::Testers::Common::Article
 ===============================================================
 
+0.44    2012-11-18
+        - change to timegm() to provide consistent timestamps.
+
 0.43    2012-11-01
         - spelling fixes. (thanks to Florian Schlichting & Gregor Herrmann).
         - change file dates changed to meet W3CDTF standards.

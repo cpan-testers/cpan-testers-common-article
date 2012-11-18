@@ -1,6 +1,6 @@
 {
     "name": "CPAN-Testers-Common-Article",
-    "version": "0.43",
+    "version": "0.44",
     "abstract": "Parse a CPAN Testers NNTP article",
     "author": [
         "Barbie (BARBIE) <barbie@cpan.org>",
@@ -50,7 +50,7 @@
     "provides": {
         "CPAN::Testers::Common::Article": {
             "file": "lib/CPAN/Testers/Common/Article.pm",
-            "version": "0.43"
+            "version": "0.44"
         }
     },
     "no_index": {

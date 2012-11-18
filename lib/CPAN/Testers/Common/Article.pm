@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = '0.43';
+$VERSION = '0.44';
 
 #----------------------------------------------------------------------------
 # Library Modules
@@ -278,7 +278,7 @@ sub _extract_date {
     my $short = sprintf "%04d%02d",             $fields{year}, $fields{mon};
     my $long  = sprintf "%04d%02d%02d%02d%02d", $fields{year}, $fields{mon}, $fields{day}, $fields{hour}, $fields{min};
     $date[4]--;
-    my $epoch = timelocal(@date);
+    my $epoch = timegm(@date);
 
     return($short,$long,$epoch);
 }
