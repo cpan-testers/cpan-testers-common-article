@@ -1,5 +1,8 @@
-Revision history for Perl module CPAN::Testers::Common::Article
-===============================================================
+Revision history for Perl module CPAN-Testers-Common-Article
+============================================================
+
+        - updated license and repository links.
+        - fixed distribution name in metadata.
 
 0.44    2012-11-18
         - change to timegm() to provide consistent timestamps.

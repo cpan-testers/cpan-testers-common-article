@@ -8,7 +8,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
     AUTHOR              => 'Barbie <barbie@cpan.org>',
-    NAME                => 'CPAN::Testers::Common::Article',
+    NAME                => 'CPAN-Testers-Common-Article',
     VERSION_FROM        => 'lib/CPAN/Testers/Common/Article.pm',
     ABSTRACT            => 'Parse a CPAN Testers NNTP article',
     NO_META             => 1,
