@@ -1,6 +1,7 @@
 Revision history for Perl module CPAN-Testers-Common-Article
 ============================================================
 
+0.45    2014-07-19
         - updated license and repository links.
         - fixed distribution name in metadata.
 
