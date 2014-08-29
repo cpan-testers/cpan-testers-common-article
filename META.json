@@ -60,6 +60,7 @@
     "resources": {
         "license": [ "http://www.perlfoundation.org/artistic_license_2_0" ],
         "bugtracker": { "web": "http://rt.cpan.org/Public/Dist/Display.html?Name=CPAN-Testers-Common-Article" },
+        "homepage": "http://devel.cpantesters.org",
         "repository": {
             "url": "git://github.com/barbie/cpan-testers-common-article.git",
             "web": "https://github.com/barbie/cpan-testers-common-article.git",
