@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 use strict;
 
-use Test::More tests => 27;
+use Test::More tests => 62;
 use CPAN::Testers::Common::Article;
 use IO::File;
 
@@ -105,6 +105,26 @@ for my $date (@dates) {
     my @extract = $ctca->_extract_date($date->{date});
     #diag("$date->{date}: " . Dumper(\@extract));
     is_deeply(\@extract, $date->{result}, ".. test for $date->{date}");
+}
+
+my @subjects = (
+    { subject => '',                                            result => 0, dist => undef,  version => undef,  author => undef,    file => undef },
+    { subject => 'CPAN Upload: blah',                           result => 0, dist => undef,  version => undef,  author => undef,    file => undef },
+    { subject => 'CPAN Upload: blah-1.00',                      result => 0, dist => undef,  version => undef,  author => undef,    file => undef },
+    { subject => 'CPAN Upload: blah-1.00.tar.bz2',              result => 1, dist => 'blah', version => '1.00', author => undef,    file => 'blah-1.00.tar.gz' }, # DistnameInfo doesn't do bz2
+    { subject => 'CPAN Upload: blah-1.00.tar.gz',               result => 1, dist => 'blah', version => '1.00', author => undef,    file => 'blah-1.00.tar.gz' },
+    { subject => 'CPAN Upload: BARBIE/blah-1.00.tar.gz',        result => 1, dist => 'blah', version => '1.00', author => 'BARBIE', file => 'blah-1.00.tar.gz' },
+    { subject => 'CPAN Upload: B/BA/BARBIE/blah-1.00.tar.gz',   result => 1, dist => 'blah', version => '1.00', author => 'BARBIE', file => 'blah-1.00.tar.gz' },
+);
+
+for my $subject (@subjects) {
+    $ctca->{subject} = $subject->{subject};
+    is($ctca->parse_upload(),$subject->{result},".. parse upload for '$subject->{subject}'");
+
+    is($ctca->distribution(),$subject->{dist});
+    is($ctca->version(),$subject->{version});
+    is($ctca->author(),$subject->{author});
+    is($ctca->filename(),$subject->{file});
 }
 
 sub readfile {
