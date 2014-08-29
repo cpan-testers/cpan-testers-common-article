@@ -1,6 +1,8 @@
 Revision history for Perl module CPAN-Testers-Common-Article
 ============================================================
 
+        - fixed license fields in META.json to be lists.
+
 0.45    2014-07-19
         - updated license and repository links.
         - fixed distribution name in metadata.
