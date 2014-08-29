@@ -5,6 +5,7 @@ Revision history for Perl module CPAN-Testers-Common-Article
         - added homepage to META files.
         - fixed distribution name in metadata.
         - catch exceptions from mail parsing.
+        - extended test suite.
 
 0.45    2014-07-19
         - updated license and repository links.
